@@ -1,0 +1,348 @@
+\documentclass[10pt]{beamer}
+%\usepackage[dvips]{graphicx}
+\usepackage{textpos}
+\usepackage{mathtools}
+\usepackage{framed,color}
+\definecolor{shadecolor}{RGB}{245,236,215}
+%\useoutertheme{infolines} % must be above Rochester usetheme
+\usetheme{Mwrdian}
+%\usetheme[height=7mm]{Rochester}
+\usetheme{default}
+\title{Adventures with SciRuby}
+\author[MOS]{Michael O'Sullivan}
+\date{16 September, 2014}
+\begin{document}
+
+%---------- Title Page --------------%
+%\begin{frame}[plain]
+%  \titlepage
+%\end{frame}
+
+\begin{frame}
+ \maketitle
+\begin{textblock*}{2cm}(9.0cm,-2.4cm)
+% \includegraphics[width=2.5cm]{../images/bpi_logo.pdf}
+\end{textblock*}
+\begin{textblock*}{2.0cm}(0.7cm,-2.2cm)
+% \includegraphics[width=1.8cm]{../images/CUArms.jpg}
+\end{textblock*}
+\end{frame}
+
+
+%---------- SciRuby --------------%
+\begin{frame}
+  \frametitle{SciRuby Gems}
+  \begin{itemize}
+      \item Visualization
+      \begin{itemize}
+        \item rubyvis, plotrb
+      \end{itemize}
+      \item Statistics
+      \begin{itemize}
+        \item statsample, distribution
+      \end{itemize}
+      \item Numeric
+      \begin{itemize}
+        \item minimization, integration, nmatrix
+      \end{itemize}
+  \end{itemize}
+
+  \begin{shaded}
+  https://github.com/SciRuby/nmatrix/wiki/Getting-started
+  \end{shaded}
+\end{frame}
+
+
+
+%---------- NMatrix Basics --------------%
+
+\begin{frame}[fragile]
+  \frametitle{NMatrix}
+  \begin{verbatim}
+    >> require 'nmatrix'
+
+    >> n = NMatrix.new( [2, 4], 0)
+    [
+     [0, 0, 0, 0]
+     [0, 0, 0, 0]
+    ]
+
+    >> NMatrix.new( 3, 0)
+    [
+     [0, 0, 0]
+     [0, 0, 0]
+     [0, 0, 0]
+    ]
+  \end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{NMatrix: Multi-Dimensional}
+  \begin{verbatim}
+
+    >> NMatrix.new( [2, 3, 3], 0)
+    [
+     [0, 0, 0]
+     [0, 0, 0]
+    ]
+
+    [
+     [0, 0, 0]
+     [0, 0, 0]
+    ]
+
+    [
+     [0, 0, 0]
+     [0, 0, 0]
+    ]
+
+  \end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Simple NMatrix Constructor}
+  \begin{verbatim}
+    N[ [1, 2, 3, 4] ]
+    => [ [ 1, 2, 3, 4 ]]
+
+
+    N[ [1, 2, 3, 4], dtype: :float32 ]
+    => [ [ 1.0, 2.0, 3.0, 4.0 ]]
+
+
+    N[ [1, 2, 3], [4, 5, 6] ]
+    => [ [1, 2, 3]
+         [4, 5, 6] ]
+  \end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Rows and Columns}
+  \begin{itemize}
+      \item Row Vector
+  \begin{verbatim}
+    N[ [1, 2, 3, 4] ]
+  \end{verbatim}
+
+      \item Column Vector
+  \begin{verbatim}
+    N[ [1], [2], [3], [4] ]
+    N[ [1, 2, 3, 4] ].transpose
+  \end{verbatim}
+  \end{itemize}
+  \[ \begin{bmatrix}
+      1 \\ 2 \\ 3 \\ 4
+  \end{bmatrix} \]
+
+
+\end{frame}
+
+%--------------- Operations ------------------
+
+\begin{frame}[fragile]
+    \frametitle{Element-wise Operations}
+    \begin{verbatim}
+    a = NMatrix.new( [2, 2], 1)
+    => [ [1, 1] [1, 1] ]
+
+    a *= 2
+    => [ [2, 2] [2, 2] ]
+
+    a + a
+    => [ [4, 4] [4, 4] ]
+
+    a ** 3
+    => [ [8, 8] [8, 8]]
+    \end{verbatim}
+\end{frame}
+
+%--------------- Dot Product ------------------
+\begin{frame}[fragile]
+  \frametitle{Dot Product}
+  \[ \begin{bmatrix}
+      1     & \cdot & \cdot & t_{x} \\
+      \cdot & 1     & \cdot & t_{y} \\
+      \cdot & \cdot & 1     & t_{z} \\
+      \cdot & \cdot & \cdot & 1     \\
+    \end{bmatrix}
+    \cdot
+    \begin{bmatrix}
+      x \\ y \\ z \\ 1
+    \end{bmatrix}
+    =
+    \begin{bmatrix}
+      x' \\ y' \\ z' \\ 1
+    \end{bmatrix}
+  \]
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Dot Product}
+  \begin{columns}
+  \begin{column}{0.45\textwidth}
+  \[
+    \begin{bmatrix}
+      2 & 5  & 7 \\
+      6 & 10 & 3 \\
+    \end{bmatrix}
+    \cdot
+    \begin{bmatrix}
+    1 & 3 \\
+    6 & 5 \\
+    2 & 1 \\
+    \end{bmatrix}
+    =
+    \begin{bmatrix}
+      46 & 38 \\
+      72 & 71 \\
+  \end{bmatrix} \]
+
+  \begin{shaded}
+  \[ A\cdot B \neq B\cdot A \]
+  \[ n_{rowsA} = n_{colsB}\]
+
+  \end{shaded}
+
+  \[
+    \begin{bmatrix}
+      2 & 5 & 7 \\
+    \end{bmatrix}
+    \cdot
+    \begin{bmatrix}
+      1 \\ 6 \\ 2 \\
+    \end{bmatrix}
+    = 46 \]
+
+  \end{column}
+
+  \begin{column}{0.45\textwidth}
+
+  \[ \begin{array}{c|c}
+        & \begin{bmatrix}
+         1 & 3 \\
+         6 & 5 \\
+         2 & 1 \\
+         \end{bmatrix} \\
+          & \\
+         \hline
+          & \\
+    \begin{bmatrix}
+      2 & 5  & 7 \\
+      6 & 10 & 3 \\
+    \end{bmatrix} &
+    \begin{bmatrix}
+      46 & 38 \\
+      72 & 71 \\
+    \end{bmatrix}
+    \\
+    \end{array}
+  \]
+  \begin{snugshade}
+  \begin{verbatim}
+
+  a.dot(b)
+  => [ [46, 38] [72, 71] ]
+  \end{verbatim}
+  \end{snugshade}
+
+    \end{column}
+  \end{columns}
+
+  \vspace{5mm}
+  \begin{snugshade}
+  \[ (2 \times 1) + (5 \times 6) + (7 \times 2) = 46 \]
+  \end{snugshade}
+\end{frame}
+
+%--------------- Ranges ------------------
+\begin{frame}[fragile]
+  \frametitle{Ranges}
+
+  \begin{verbatim}
+  >> NMatrix.new( [2, 5], (0..9).to_a )
+  [
+   [0, 1, 2, 3, 4]
+   [5, 6, 7, 8, 9]
+  ]
+
+  NVector.linspace(1, 5, 5).transpose
+  =>
+  [
+    [1.0, 2.0, 3.0, 4.0, 5.0]
+  ]
+
+  \end{verbatim}
+\end{frame}
+
+
+\begin{frame}
+ \frametitle{Water/Oil Emulsion Stability with Electrolytes}
+\begin{columns}
+
+\begin{column}{0.5\textwidth}
+$\geq$ 20 mM electrolyte: \\
+\begin{itemize}
+ \item decreased coarsening rate
+\item inhibited coalescence during freeze-thaw processing
+\item hypothesized salt enhanced surfactant adsorption density
+\end{itemize}
+
+\vspace{5mm}
+
+Aronson and Petko, {\em J. Colloid and Interface Sci.},(1993), 159:134--149
+ \end{column}
+
+ \begin{column}{0.5\textwidth}
+%\includegraphics[width=5cm]{../images/aronson.jpg}
+ \end{column}
+\end{columns}
+
+\end{frame}
+
+%---------- 10 Ostwald Ripening--------------%
+\begin{frame}
+\frametitle{Ostwald Ripening}
+%\begin{center}
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\begin{block}{NaCl solutions dispersed in mineral oil}
+
+Koroleva and Yurtov {\em Colloid Journal},(2003), 65(1):40--43
+\end{block}
+
+\vspace{2 mm}
+%\begin{block} %{Results}
+\begin{itemize}
+\item $\leq$ 12 mM
+\begin{itemize}
+\item mean droplet size increases
+\item droplet number density decreases
+\end{itemize}
+\item 12 mM $\leq$ 188 mM
+\begin{itemize}
+\item droplet size redistribution occurs
+\item constant droplet number density
+\end{itemize}
+\item $>$ 188 mM
+\begin{itemize}
+\item droplet size varies $<$ 1~\% over time studied
+\end{itemize}
+\end{itemize}
+%\end{block}
+
+
+\end{column}
+
+\begin{column}{0.45\textwidth}
+%\includegraphics[width=6.0cm]{../images/ostwald.pdf}
+\vspace{5mm}
+\[\pi = \frac{nRT}{V} \]
+\[p_{Lp} = \frac{2\gamma}{r}\]
+\end{column}
+\end{columns}
+%\end{center}
+\end{frame}
+% End automatic figure input
+
+
+\end{document}
