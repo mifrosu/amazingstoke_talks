@@ -1,0 +1,22 @@
+2014-09-13 Using Debian Testing (Jessie), ruby 2.1.2p95 (rbenv)
+
+https://github.com/SciRuby/nmatrix/wiki/Installation
+
+sudo apt install libatlas-base-dev
+sudo apt-get --purge remove liblapack-dev liblapack3 liblapack3gf
+
+Installing the nmatrix gem, as per the Ubuntu 13.04 instructions, did not work for me.
+Used the Compiling from Source instructions instead:
+
+git clone https://github.com/SciRuby/nmatrix.git
+# or "git clone git@github.com:SciRuby/nmatrix.git" if you have push privileges
+cd nmatrix
+gem install bundler  # if you don't already have it
+bundle install
+export CPLUS_INCLUDE_PATH=/usr/include/atlas  # or wherever your atlas .h files are
+export C_INCLUDE_PATH=/usr/include/atlas   # or wherever your atlas .h files are
+bundle exec rake compile  # 'clobber' or 'clean' also useful # expect lots of warnings
+
+bundle exec rake repackage
+gem install pkg/nmatrix-0.1.0.rc5.gem
+
