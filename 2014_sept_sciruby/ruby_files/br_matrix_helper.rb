@@ -1,4 +1,5 @@
 require 'nmatrix'
+require 'benchmark/ips'
 
 class BRMatrix
 
@@ -10,4 +11,27 @@ class BRMatrix
     return array
   end
 
+end
+
+if __FILE__ == $0
+
+  Benchmark.ips do |x|
+    x.report("generate10") {
+      BRMatrix.mrange(0, 9, 1)
+    }
+
+    x.report("generate100") {
+      BRMatrix.mrange(0, 99, 1)
+    }
+
+    x.report("generate1000") {
+      BRMatrix.mrange(0, 999, 1)
+    }
+    x.report("generate10-000") {
+      BRMatrix.mrange(0, 9999, 1)
+    }
+    x.report("generate100-000") {
+      BRMatrix.mrange(0, 99999, 1)
+    }
+  end
 end
