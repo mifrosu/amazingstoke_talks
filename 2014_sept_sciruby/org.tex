@@ -1,0 +1,114 @@
+\documentclass[10pt]{beamer}
+%\usepackage[dvips]{graphicx}
+\usepackage{textpos}
+%\useoutertheme{infolines} % must be above Rochester usetheme
+\usetheme{Mwrdian}
+%\usetheme[height=7mm]{Rochester}
+\usetheme{default}
+\title{Basic Beamer Presentation}
+%\subtitle{Surface properties of Oil-Water-Solid interfaces}
+\author[MOS]{Michael O'Sullivan}
+\date{20 February, 2012}
+\begin{document}
+
+%---------- Title Page --------------%
+%\begin{frame}[plain]
+%  \titlepage
+%\end{frame}
+
+\begin{frame}
+ \maketitle
+\begin{textblock*}{2cm}(9.0cm,-2.4cm)
+% \includegraphics[width=2.5cm]{../images/bpi_logo.pdf}
+\end{textblock*}
+\begin{textblock*}{2.0cm}(0.7cm,-2.2cm)
+% \includegraphics[width=1.8cm]{../images/CUArms.jpg}
+\end{textblock*}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Water/Oil Emulsion Stability with Electrolytes}
+% \includegraphics[width=10cm]{../images/bv_scheme.pdf} \\
+\vspace{5mm}
+\begin{itemize}
+ \item Mixtures of 100 nm water/cyclohexane and brine/cyclohexane
+\item Hetero-coalescence observed when NaCl~$\geq$~0.2~M
+\item Verified with light scattering and dye experiments (Zn$^{2+}$ + 5,5'-nitrilobarbiturate ammonium salt)
+\end{itemize}
+\vspace{5mm}
+Davies, Graham and Vincent, {\em J. Colloid and Interface Sci.},(1988), 126(2):616--621
+\end{frame}
+
+
+\begin{frame}
+ \frametitle{Water/Oil Emulsion Stability with Electrolytes}
+\begin{columns}
+
+\begin{column}{0.5\textwidth}
+$\geq$ 20 mM electrolyte: \\
+\begin{itemize}
+ \item decreased coarsening rate
+\item inhibited coalescence during freeze-thaw processing
+\item hypothesized salt enhanced surfactant adsorption density
+\end{itemize}
+
+\vspace{5mm}
+
+Aronson and Petko, {\em J. Colloid and Interface Sci.},(1993), 159:134--149
+ \end{column}
+
+ \begin{column}{0.5\textwidth}
+%\includegraphics[width=5cm]{../images/aronson.jpg} 
+ \end{column}
+\end{columns}
+
+\end{frame}
+
+%---------- 10 Ostwald Ripening--------------%
+\begin{frame}
+\frametitle{Ostwald Ripening}
+%\begin{center}
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\begin{block}{NaCl solutions dispersed in mineral oil}
+
+Koroleva and Yurtov {\em Colloid Journal},(2003), 65(1):40--43
+\end{block}
+
+\vspace{2 mm}
+%\begin{block} %{Results}
+\begin{itemize}
+\item $\leq$ 12 mM
+\begin{itemize}
+\item mean droplet size increases
+\item droplet number density decreases
+\end{itemize}
+\item 12 mM $\leq$ 188 mM
+\begin{itemize}
+\item droplet size redistribution occurs
+\item constant droplet number density
+\end{itemize} 
+\item $>$ 188 mM
+\begin{itemize}
+\item droplet size varies $<$ 1~\% over time studied
+\end{itemize} 
+\end{itemize} 
+%\end{block}
+
+
+\end{column}
+
+\begin{column}{0.45\textwidth}
+%\includegraphics[width=6.0cm]{../images/ostwald.pdf}
+\vspace{5mm}
+\[\pi = \frac{nRT}{V} \]
+\[p_{Lp} = \frac{2\gamma}{r}\]
+\end{column}
+\end{columns}
+%\end{center}
+\end{frame}
+% End automatic figure input
+ 
+
+\end{document}
